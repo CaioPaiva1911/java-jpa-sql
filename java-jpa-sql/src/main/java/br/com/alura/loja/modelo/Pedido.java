@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Pedido {
 
     @Id
@@ -21,7 +20,7 @@ public class Pedido {
     private Long id;
     @NonNull
     @Column(name = "valor_total")
-    private BigDecimal valorTotal;
+    private BigDecimal valorTotal = BigDecimal.ZERO;
     @NonNull
     private LocalDate data = LocalDate.now();
     @ManyToOne
@@ -38,6 +37,7 @@ public class Pedido {
     public void adicionarItem(ItemPedido item) {
         item.setPedido(this);
         this.itens.add(item);
+        this.valorTotal = this.valorTotal.add(item.getValor());
     }
 
 }
