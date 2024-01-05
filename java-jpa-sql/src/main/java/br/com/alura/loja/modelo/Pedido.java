@@ -23,7 +23,7 @@ public class Pedido {
     private BigDecimal valorTotal = BigDecimal.ZERO;
     @NonNull
     private LocalDate data = LocalDate.now();
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NonNull
     private Cliente cliente;
     @NonNull
