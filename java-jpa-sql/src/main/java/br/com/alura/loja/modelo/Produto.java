@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Table(name = "produtos")
 @NamedQuery(name = "Produto.produtosPorCategoria",
 		query = "SELECT p FROM Produto p WHERE p.categoria.nome = :nome")
+//Herança de tabelas em persistência e mapeamento via Hibernate
+@Inheritance(strategy = InheritanceType.JOINED) //JOINED e SINGLE_TABLE MORE USED
 public class Produto {
 
 	@Id
