@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -60,6 +61,32 @@ public class ProdutoDao {
 		return em.createQuery(jpql, BigDecimal.class)
 				.setParameter("nome", nome)
 				.getSingleResult();
+	}
+
+	public List<Produto> buscarPorParametros(String nome,
+											 BigDecimal preco, LocalDate dataCadastro) {
+		String jpql = "SELECT p FROM Produto p WHERE 1=1 ";
+		if (nome != null && !nome.trim().isEmpty()) {
+			jpql = " AND p.nome = :nome ";
+		}
+		if (preco != null) {
+			jpql = " AND p.preco = :preco ";
+		}
+		if (dataCadastro != null) {
+			jpql = " AND p.dataCadastro = :dataCadastro ";
+		}
+		TypedQuery<Produto> query = em.createQuery(jpql, Produto.class);
+		if (nome != null && !nome.trim().isEmpty()) {
+			query.setParameter("nome", nome);
+		}
+		if (preco != null) {
+			query.setParameter("preco", preco);
+		}
+		if (dataCadastro != null) {
+			query.setParameter("dataCadastro", dataCadastro);
+		}
+
+		return query.getResultList();
 	}
 
 	public List<Produto> buscarPorParametrosComCriteria(String nome, BigDecimal preco, LocalDate dataCadastro) {

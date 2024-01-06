@@ -8,16 +8,25 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Table(name = "clientes")
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
-    private String nome;
-    @NonNull
-    private String cpf;
+    @Embedded
+    private DadosPessoais dadosPessoais;
+
+    public Cliente(String nome, String cpf) {
+        this.dadosPessoais = new DadosPessoais(nome, cpf);
+    }
+
+    public String getNome() {
+        return this.getDadosPessoais().getNome();
+    }
+
+    public String getCpf() {
+        return this.getDadosPessoais().getCpf();
+    }
 
 }

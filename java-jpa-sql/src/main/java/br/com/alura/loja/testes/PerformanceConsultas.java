@@ -21,7 +21,7 @@ public class PerformanceConsultas {
         PedidoDao pedidoDao = new PedidoDao(em);
         Pedido pedido = pedidoDao.buscarPedidoComCliente(1L);
         em.close();
-        System.out.println(pedido.getData());
+        System.out.println(pedido.getCliente().getNome());
 
     }
 
